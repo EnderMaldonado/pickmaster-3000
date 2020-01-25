@@ -1,0 +1,88 @@
+import gql from 'graphql-tag';
+
+export const GET_ORDERS = gql`
+{
+  orders(first:10){
+    edges{
+      node{
+        id
+        name
+        totalShippingPriceSet{presentmentMoney{amount}}
+        totalPriceSet{presentmentMoney{amount}}
+        publication{
+          name
+          id
+        },
+        subtotalLineItemsQuantity,
+        billingAddress{
+         country,
+         address1,
+         address2,
+         city,
+         company,
+         phone,
+         name,
+         zip,
+         province
+       },
+        shippingAddress{
+          country,
+          address1,
+          address2,
+          city,
+          company,
+          phone,
+          name,
+          zip,
+          province
+        }
+        note,
+        createdAt,
+        paymentGatewayNames
+        transactions {
+          createdAt
+        },
+        displayFinancialStatus,
+        displayFulfillmentStatus
+        lineItems(first:10){
+          edges{
+            node{
+              quantity,
+              variant{
+                sku
+              },
+              discountedUnitPriceSet{
+                shopMoney{amount,currencyCode}
+              }
+              product{
+                handle,
+                tags,
+                title,
+                productType,
+                images(first:1){
+                  edges{
+                    node{
+                      transformedSrc(maxWidth:200),
+                      src,
+                      altText
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`;
+
+
+export const GET_TIMEZONE_OFFSET = gql`
+{
+  shop{
+    timezoneOffset
+  }
+}
+`;

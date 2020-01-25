@@ -1,0 +1,11 @@
+.Container-Polaris-Card {
+  > * {
+    height: 100%;
+  }
+}
+
+@media print{
+  .oculto-impresion, .oculto-impresion *{
+    display: none !important;
+  }
+}
