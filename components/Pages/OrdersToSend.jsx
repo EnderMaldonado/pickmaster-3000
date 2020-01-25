@@ -244,27 +244,31 @@ const OrdersToSend = ({handleRefresh}) => {
         let pmOrders = pmOrdersData || {}
         let sfyOrders = {}, sfyordersData = {}
         for (let d of dat) {
-          let sku = d.id.toString()
-          if ( !Object.keys(pmOrders).includes(sku) ){
-            let {country, country_code, name} =  getAddressSfy(d)            
-            sfyOrders = {
-              ...sfyOrders,
-              [sku]: {
-                number:           d.name,
-                platform :        d.gateway?getPlatform(d.gateway):"Shopify",
-                region:           getRegion(country),
-                country,
-                country_code,
-                totalItems:       getItemsAccum(d.line_items),
-                orderDate:        d.created_at,
-                customerName:     d.customer?`${d.customer.first_name} ${d.customer.last_name}`:"",
-                customerNameAddress: name,
-                customerId:       d.customer?getCustomerId(d.customer):"",
-                itemEbayId:       d.note_attributes?getEbayItemId(d.note_attributes):"",
-                sku
+          try {
+            let sku = d.id.toString()
+            if ( !Object.keys(pmOrders).includes(sku) ){
+              let {country, country_code, name} =  getAddressSfy(d)
+              sfyOrders = {
+                ...sfyOrders,
+                [sku]: {
+                  number:           d.name,
+                  platform :        d.gateway?getPlatform(d.gateway):"Shopify",
+                  region:           getRegion(country),
+                  country,
+                  country_code,
+                  totalItems:       getItemsAccum(d.line_items),
+                  orderDate:        d.created_at,
+                  customerName:     d.customer?`${d.customer.first_name} ${d.customer.last_name}`:"",
+                  customerNameAddress: name,
+                  customerId:       d.customer?getCustomerId(d.customer):"",
+                  itemEbayId:       d.note_attributes?getEbayItemId(d.note_attributes):"",
+                  sku
+                }
               }
+              sfyordersData = {...sfyordersData, [sku]:d}
             }
-            sfyordersData = {...sfyordersData, [sku]:d}
+          } catch (e) {
+            console.log(e)
           }
         }
         setShopifyOrdersList(sfyOrders)
