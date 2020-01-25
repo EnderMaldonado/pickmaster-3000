@@ -16,7 +16,7 @@ const Cookies = require('js-cookie')
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev:true });
+const app = next({ dev });
 const handle = app.getRequestHandler();
 
 const firebase = require('firebase')
