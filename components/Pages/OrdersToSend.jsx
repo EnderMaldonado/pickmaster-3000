@@ -268,7 +268,7 @@ const OrdersToSend = ({handleRefresh}) => {
               sfyordersData = {...sfyordersData, [sku]:d}
             }
           } catch (e) {
-            console.log(e)
+            console.log(e, d)
           }
         }
         setShopifyOrdersList(sfyOrders)
